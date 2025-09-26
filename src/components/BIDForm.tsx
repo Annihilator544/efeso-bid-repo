@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,6 +8,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Trash2 } from "lucide-react";
 import { CompanyData } from "@/types/bid";
 import { buttonVariants } from "@/components/ui/button-variants";
+import { FileUpload } from "@/components/FileUpload";
+import { parseUploadedData, generateTemplateData } from "@/lib/dataParser";
+import { useToast } from "@/components/ui/use-toast";
 
 interface BIDFormProps {
   onDataChange: (data: CompanyData) => void;
@@ -15,6 +18,7 @@ interface BIDFormProps {
 }
 
 export function BIDForm({ onDataChange, onPreview }: BIDFormProps) {
+  const { toast } = useToast();
   const [data, setData] = useState<CompanyData>({
     companyName: "Valeo Foods",
     date: "August 2025",
@@ -130,6 +134,45 @@ export function BIDForm({ onDataChange, onPreview }: BIDFormProps) {
     ]
   });
 
+  const handleFileProcessed = (rows: any[]) => {
+    try {
+      const parsedData = parseUploadedData(rows);
+      const mergedData = { ...data, ...parsedData };
+      setData(mergedData);
+      onDataChange(mergedData);
+      toast({
+        title: "Data imported successfully",
+        description: `Imported data for ${Object.keys(parsedData).length} sections.`,
+      });
+    } catch (error) {
+      console.error('Error merging data:', error);
+      toast({
+        title: "Error importing data",
+        description: "There was an issue processing the uploaded data.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const downloadTemplate = () => {
+    const templateData = generateTemplateData();
+    const csvContent = "data:text/csv;charset=utf-8," + 
+      "Question ID,Question,Answer\n" +
+      templateData.map(row => `${row.questionId},"${row.question}","${row.answer}"`).join("\n");
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "BID_Template.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  useEffect(() => {
+    onDataChange(data);
+  }, [data, onDataChange]);
+
   const updateData = (path: string, value: any) => {
     const keys = path.split('.');
     const newData = JSON.parse(JSON.stringify(data));
@@ -182,14 +225,35 @@ export function BIDForm({ onDataChange, onPreview }: BIDFormProps) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="basic" className="w-full">
-            <TabsList className="grid w-full grid-cols-5">
+          <Tabs defaultValue="upload" className="w-full">
+            <TabsList className="grid w-full grid-cols-6">
+              <TabsTrigger value="upload">Upload Data</TabsTrigger>
               <TabsTrigger value="basic">Basic Info</TabsTrigger>
               <TabsTrigger value="structure">Structure</TabsTrigger>
               <TabsTrigger value="operations">Operations</TabsTrigger>
               <TabsTrigger value="financials">Financials</TabsTrigger>
               <TabsTrigger value="analysis">Analysis</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="upload" className="space-y-6 mt-6">
+              <div className="grid gap-6">
+                <FileUpload onFileProcessed={handleFileProcessed} />
+                
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Download Template</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Button onClick={downloadTemplate} variant="outline" className="w-full">
+                      Download CSV Template
+                    </Button>
+                    <p className="text-sm text-muted-foreground mt-2">
+                      Download a template with all questions to fill out your data offline
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
 
             <TabsContent value="basic" className="space-y-6 mt-6">
               <div className="grid grid-cols-2 gap-4">
