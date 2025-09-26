@@ -124,7 +124,7 @@ const Index = () => {
             <Button 
               variant="outline" 
               size="xl"
-              className="text-white border-white hover:bg-white hover:text-gray-900"
+              className="bg-white/10 text-white border-white/30 hover:bg-white hover:text-gray-900 backdrop-blur-sm font-semibold"
             >
               View Sample Presentation
             </Button>

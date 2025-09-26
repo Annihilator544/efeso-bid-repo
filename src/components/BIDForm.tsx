@@ -226,12 +226,14 @@ export function BIDForm({ onDataChange, onPreview }: BIDFormProps) {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="upload" className="w-full">
-            <TabsList className="grid w-full grid-cols-6">
-              <TabsTrigger value="upload">Upload Data</TabsTrigger>
-              <TabsTrigger value="basic">Basic Info</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-8 text-xs">
+              <TabsTrigger value="upload">Upload</TabsTrigger>
+              <TabsTrigger value="basic">Basic</TabsTrigger>
               <TabsTrigger value="structure">Structure</TabsTrigger>
               <TabsTrigger value="operations">Operations</TabsTrigger>
+              <TabsTrigger value="competitors">Competitors</TabsTrigger>
               <TabsTrigger value="financials">Financials</TabsTrigger>
+              <TabsTrigger value="improvements">Improvements</TabsTrigger>
               <TabsTrigger value="analysis">Analysis</TabsTrigger>
             </TabsList>
 
@@ -431,7 +433,7 @@ export function BIDForm({ onDataChange, onPreview }: BIDFormProps) {
               </div>
             </TabsContent>
 
-            <TabsContent value="financials" className="space-y-6 mt-6">
+            <TabsContent value="competitors" className="space-y-6 mt-6">
               <div>
                 <Label>Competitors</Label>
                 <div className="space-y-4 mt-2">
@@ -472,8 +474,122 @@ export function BIDForm({ onDataChange, onPreview }: BIDFormProps) {
               </div>
             </TabsContent>
 
-            <TabsContent value="analysis" className="space-y-6 mt-6">
-              <div className="grid grid-cols-2 gap-6">
+            <TabsContent value="financials" className="space-y-6 mt-6">
+              <div>
+                <Label>Financial Performance (Multi-Year)</Label>
+                <div className="space-y-4 mt-2">
+                  {data.financials.map((financial, index) => (
+                    <div key={index} className="border rounded-lg p-4 space-y-3">
+                      <div className="grid grid-cols-4 gap-3">
+                        <Input
+                          placeholder="Year"
+                          value={financial.year}
+                          onChange={(e) => updateData(`financials.${index}.year`, e.target.value)}
+                        />
+                        <Input
+                          placeholder="Revenue"
+                          value={financial.revenue}
+                          onChange={(e) => updateData(`financials.${index}.revenue`, e.target.value)}
+                        />
+                        <Input
+                          placeholder="Operating Profit"
+                          value={financial.operatingProfit}
+                          onChange={(e) => updateData(`financials.${index}.operatingProfit`, e.target.value)}
+                        />
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder="Net Profit"
+                            value={financial.netProfit}
+                            onChange={(e) => updateData(`financials.${index}.netProfit`, e.target.value)}
+                            className="flex-1"
+                          />
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => removeArrayItem('financials', index)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-3 gap-3">
+                        <Input
+                          placeholder="Operating Margin"
+                          value={financial.operatingMargin}
+                          onChange={(e) => updateData(`financials.${index}.operatingMargin`, e.target.value)}
+                        />
+                        <Input
+                          placeholder="Free Cash Flow"
+                          value={financial.freeCashFlow}
+                          onChange={(e) => updateData(`financials.${index}.freeCashFlow`, e.target.value)}
+                        />
+                        <Input
+                          placeholder="Debt"
+                          value={financial.debt}
+                          onChange={(e) => updateData(`financials.${index}.debt`, e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                  <Button
+                    variant="outline"
+                    onClick={() => addArrayItem('financials', { year: '', revenue: '', operatingProfit: '', netProfit: '', operatingMargin: '', freeCashFlow: '', debt: '' })}
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Financial Year
+                  </Button>
+                </div>
+              </div>
+
+              <div>
+                <Label>Current Profitability Analysis</Label>
+                <div className="grid grid-cols-2 gap-4 mt-2">
+                  <div>
+                    <Label htmlFor="annualRevenue">Annual Revenue</Label>
+                    <Input
+                      id="annualRevenue"
+                      value={data.profitability.annualRevenue}
+                      onChange={(e) => updateData('profitability.annualRevenue', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="operatingProfitCurrent">Operating Profit</Label>
+                    <Input
+                      id="operatingProfitCurrent"
+                      value={data.profitability.operatingProfit}
+                      onChange={(e) => updateData('profitability.operatingProfit', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="netProfitCurrent">Net Profit</Label>
+                    <Input
+                      id="netProfitCurrent"
+                      value={data.profitability.netProfit}
+                      onChange={(e) => updateData('profitability.netProfit', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="operatingMarginCurrent">Operating Margin</Label>
+                    <Input
+                      id="operatingMarginCurrent"
+                      value={data.profitability.operatingMargin}
+                      onChange={(e) => updateData('profitability.operatingMargin', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="netMargin">Net Margin</Label>
+                    <Input
+                      id="netMargin"
+                      value={data.profitability.netMargin}
+                      onChange={(e) => updateData('profitability.netMargin', e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="improvements" className="space-y-6 mt-6">
+              <div className="grid grid-cols-1 gap-8">
                 <div>
                   <Label>Cost Reduction Strategies</Label>
                   <div className="space-y-2 mt-2">
@@ -510,13 +626,95 @@ export function BIDForm({ onDataChange, onPreview }: BIDFormProps) {
                       }}
                     >
                       <Plus className="h-4 w-4 mr-2" />
-                      Add Strategy
+                      Add Cost Strategy
                     </Button>
                   </div>
                 </div>
 
                 <div>
-                  <Label>Innovation Opportunities</Label>
+                  <Label>Portfolio Optimization</Label>
+                  <div className="space-y-2 mt-2">
+                    {data.improvements.portfolioOptimization.map((item, index) => (
+                      <div key={index} className="flex gap-2">
+                        <Textarea
+                          value={item}
+                          onChange={(e) => {
+                            const newItems = [...data.improvements.portfolioOptimization];
+                            newItems[index] = e.target.value;
+                            updateData('improvements.portfolioOptimization', newItems);
+                          }}
+                          rows={2}
+                          className="flex-1"
+                        />
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            const newItems = data.improvements.portfolioOptimization.filter((_, i) => i !== index);
+                            updateData('improvements.portfolioOptimization', newItems);
+                          }}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ))}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const newItems = [...data.improvements.portfolioOptimization, ''];
+                        updateData('improvements.portfolioOptimization', newItems);
+                      }}
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Portfolio Strategy
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <Label>Pricing & Revenue Management</Label>
+                  <div className="space-y-2 mt-2">
+                    {data.improvements.pricingRevenue.map((item, index) => (
+                      <div key={index} className="flex gap-2">
+                        <Textarea
+                          value={item}
+                          onChange={(e) => {
+                            const newItems = [...data.improvements.pricingRevenue];
+                            newItems[index] = e.target.value;
+                            updateData('improvements.pricingRevenue', newItems);
+                          }}
+                          rows={2}
+                          className="flex-1"
+                        />
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            const newItems = data.improvements.pricingRevenue.filter((_, i) => i !== index);
+                            updateData('improvements.pricingRevenue', newItems);
+                          }}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ))}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const newItems = [...data.improvements.pricingRevenue, ''];
+                        updateData('improvements.pricingRevenue', newItems);
+                      }}
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Pricing Strategy
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <Label>Innovation & Brand Investment</Label>
                   <div className="space-y-2 mt-2">
                     {data.improvements.innovation.map((item, index) => (
                       <div key={index} className="flex gap-2">
@@ -551,7 +749,269 @@ export function BIDForm({ onDataChange, onPreview }: BIDFormProps) {
                       }}
                     >
                       <Plus className="h-4 w-4 mr-2" />
-                      Add Opportunity
+                      Add Innovation Strategy
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <Label>Integration Discipline</Label>
+                  <div className="space-y-2 mt-2">
+                    {data.improvements.integrationDiscipline.map((item, index) => (
+                      <div key={index} className="flex gap-2">
+                        <Textarea
+                          value={item}
+                          onChange={(e) => {
+                            const newItems = [...data.improvements.integrationDiscipline];
+                            newItems[index] = e.target.value;
+                            updateData('improvements.integrationDiscipline', newItems);
+                          }}
+                          rows={2}
+                          className="flex-1"
+                        />
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            const newItems = data.improvements.integrationDiscipline.filter((_, i) => i !== index);
+                            updateData('improvements.integrationDiscipline', newItems);
+                          }}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ))}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const newItems = [...data.improvements.integrationDiscipline, ''];
+                        updateData('improvements.integrationDiscipline', newItems);
+                      }}
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Integration Strategy
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="analysis" className="space-y-6 mt-6">
+              <div className="grid grid-cols-1 gap-6">
+                <div>
+                  <Label>Pre-Meeting Analysis</Label>
+                  <div className="grid grid-cols-2 gap-4 mt-2">
+                    <div>
+                      <Label className="text-sm">Dissatisfaction Elements</Label>
+                      <div className="space-y-2 mt-1">
+                        {data.analysis.preMeeting.dissatisfaction.map((item, index) => (
+                          <div key={index} className="flex gap-2">
+                            <Input
+                              value={item}
+                              onChange={(e) => {
+                                const newItems = [...data.analysis.preMeeting.dissatisfaction];
+                                newItems[index] = e.target.value;
+                                updateData('analysis.preMeeting.dissatisfaction', newItems);
+                              }}
+                              className="flex-1"
+                            />
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                const newItems = data.analysis.preMeeting.dissatisfaction.filter((_, i) => i !== index);
+                                updateData('analysis.preMeeting.dissatisfaction', newItems);
+                              }}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            const newItems = [...data.analysis.preMeeting.dissatisfaction, ''];
+                            updateData('analysis.preMeeting.dissatisfaction', newItems);
+                          }}
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Add Dissatisfaction
+                        </Button>
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-sm">EFESO Levers</Label>
+                      <div className="space-y-2 mt-1">
+                        {data.analysis.preMeeting.levers.map((item, index) => (
+                          <div key={index} className="flex gap-2">
+                            <Input
+                              value={item}
+                              onChange={(e) => {
+                                const newItems = [...data.analysis.preMeeting.levers];
+                                newItems[index] = e.target.value;
+                                updateData('analysis.preMeeting.levers', newItems);
+                              }}
+                              className="flex-1"
+                            />
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                const newItems = data.analysis.preMeeting.levers.filter((_, i) => i !== index);
+                                updateData('analysis.preMeeting.levers', newItems);
+                              }}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            const newItems = [...data.analysis.preMeeting.levers, ''];
+                            updateData('analysis.preMeeting.levers', newItems);
+                          }}
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Add Lever
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <Label>During Meeting Analysis</Label>
+                  <div className="grid grid-cols-2 gap-4 mt-2">
+                    <div>
+                      <Label className="text-sm">Dissatisfaction Elements</Label>
+                      <div className="space-y-2 mt-1">
+                        {data.analysis.duringMeeting.dissatisfaction.map((item, index) => (
+                          <div key={index} className="flex gap-2">
+                            <Input
+                              value={item}
+                              onChange={(e) => {
+                                const newItems = [...data.analysis.duringMeeting.dissatisfaction];
+                                newItems[index] = e.target.value;
+                                updateData('analysis.duringMeeting.dissatisfaction', newItems);
+                              }}
+                              className="flex-1"
+                            />
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                const newItems = data.analysis.duringMeeting.dissatisfaction.filter((_, i) => i !== index);
+                                updateData('analysis.duringMeeting.dissatisfaction', newItems);
+                              }}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            const newItems = [...data.analysis.duringMeeting.dissatisfaction, ''];
+                            updateData('analysis.duringMeeting.dissatisfaction', newItems);
+                          }}
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Add Dissatisfaction
+                        </Button>
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-sm">EFESO Levers</Label>
+                      <div className="space-y-2 mt-1">
+                        {data.analysis.duringMeeting.levers.map((item, index) => (
+                          <div key={index} className="flex gap-2">
+                            <Input
+                              value={item}
+                              onChange={(e) => {
+                                const newItems = [...data.analysis.duringMeeting.levers];
+                                newItems[index] = e.target.value;
+                                updateData('analysis.duringMeeting.levers', newItems);
+                              }}
+                              className="flex-1"
+                            />
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                const newItems = data.analysis.duringMeeting.levers.filter((_, i) => i !== index);
+                                updateData('analysis.duringMeeting.levers', newItems);
+                              }}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            const newItems = [...data.analysis.duringMeeting.levers, ''];
+                            updateData('analysis.duringMeeting.levers', newItems);
+                          }}
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Add Lever
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <Label>Follow-up Actions</Label>
+                  <div className="space-y-4 mt-2">
+                    {data.followUp.map((action, index) => (
+                      <div key={index} className="border rounded-lg p-4 space-y-3">
+                        <div className="grid grid-cols-4 gap-3">
+                          <Input
+                            placeholder="Action"
+                            value={action.action}
+                            onChange={(e) => updateData(`followUp.${index}.action`, e.target.value)}
+                          />
+                          <Input
+                            placeholder="Who"
+                            value={action.who}
+                            onChange={(e) => updateData(`followUp.${index}.who`, e.target.value)}
+                          />
+                          <Input
+                            placeholder="When"
+                            value={action.when}
+                            onChange={(e) => updateData(`followUp.${index}.when`, e.target.value)}
+                          />
+                          <div className="flex gap-2">
+                            <Input
+                              placeholder="Zoho"
+                              value={action.zoho}
+                              onChange={(e) => updateData(`followUp.${index}.zoho`, e.target.value)}
+                              className="flex-1"
+                            />
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => removeArrayItem('followUp', index)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    <Button
+                      variant="outline"
+                      onClick={() => addArrayItem('followUp', { action: '', who: '', when: '', zoho: '' })}
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Follow-up Action
                     </Button>
                   </div>
                 </div>
