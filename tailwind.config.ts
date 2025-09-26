@@ -57,6 +57,35 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // EFESO Brand Colors
+        efeso: {
+          orange: "hsl(var(--efeso-orange))",
+          "orange-light": "hsl(var(--efeso-orange-light))",
+          "orange-dark": "hsl(var(--efeso-orange-dark))",
+        },
+        // Professional gray scale
+        gray: {
+          50: "hsl(var(--gray-50))",
+          100: "hsl(var(--gray-100))",
+          200: "hsl(var(--gray-200))",
+          300: "hsl(var(--gray-300))",
+          400: "hsl(var(--gray-400))",
+          500: "hsl(var(--gray-500))",
+          600: "hsl(var(--gray-600))",
+          700: "hsl(var(--gray-700))",
+          800: "hsl(var(--gray-800))",
+          900: "hsl(var(--gray-900))",
+        },
+        // Presentation specific
+        presentation: {
+          bg: "hsl(var(--presentation-bg))",
+          header: "hsl(var(--presentation-header))",
+        },
+        table: {
+          header: "hsl(var(--table-header))",
+          "row-even": "hsl(var(--table-row-even))",
+          "row-odd": "hsl(var(--table-row-odd))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
