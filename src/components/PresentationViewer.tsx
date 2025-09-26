@@ -195,6 +195,283 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
           </div>
         </SlideLayout>
       )
+    },
+    
+    // Slide 7: Financial Performance
+    {
+      id: 7,
+      title: `What is ${data.companyName} financial performance?`,
+      type: "table" as const,
+      content: (
+        <SlideLayout title={`What is ${data.companyName} financial performance?`} slideNumber={7} totalSlides={14}>
+          <div className="space-y-6">
+            <p className="text-lg text-gray-700">
+              Financial performance over recent years:
+            </p>
+            <PresentationTable
+              headers={["Year", "Revenue", "Operating Profit", "Net Profit", "Operating Margin", "Free Cash Flow", "Debt"]}
+              rows={data.financials.map(fin => [
+                fin.year, fin.revenue, fin.operatingProfit, fin.netProfit, fin.operatingMargin, fin.freeCashFlow, fin.debt
+              ])}
+            />
+          </div>
+        </SlideLayout>
+      )
+    },
+    
+    // Slide 8: Competitors
+    {
+      id: 8,
+      title: `Who are ${data.companyName} competitors?`,
+      type: "table" as const,
+      content: (
+        <SlideLayout title={`Who are ${data.companyName} competitors?`} slideNumber={8} totalSlides={14}>
+          <div className="space-y-6">
+            <p className="text-lg text-gray-700">
+              Key competitors in the market:
+            </p>
+            <PresentationTable
+              headers={["Competitor", "Focus Areas"]}
+              rows={data.competitors.map(comp => [comp.name, comp.focusAreas])}
+            />
+          </div>
+        </SlideLayout>
+      )
+    },
+    
+    // Slide 9: Profitability Analysis
+    {
+      id: 9,
+      title: `How profitable is ${data.companyName}?`,
+      type: "table" as const,
+      content: (
+        <SlideLayout title={`How profitable is ${data.companyName}?`} slideNumber={9} totalSlides={14}>
+          <div className="space-y-6">
+            <p className="text-lg text-gray-700">
+              Current profitability metrics:
+            </p>
+            <PresentationTable
+              headers={["Metric", "Value"]}
+              rows={[
+                ["Annual Revenue", data.profitability.annualRevenue],
+                ["Operating Profit", data.profitability.operatingProfit],
+                ["Net Profit", data.profitability.netProfit],
+                ["Operating Margin", data.profitability.operatingMargin],
+                ["Net Margin", data.profitability.netMargin]
+              ]}
+            />
+          </div>
+        </SlideLayout>
+      )
+    },
+    
+    // Slide 10: Improvement Opportunities
+    {
+      id: 10,
+      title: `What are the improvement opportunities?`,
+      type: "two-column" as const,
+      content: (
+        <SlideLayout title={`What are the improvement opportunities?`} slideNumber={10} totalSlides={14}>
+          <div className="grid grid-cols-2 gap-8">
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold text-presentation-header mb-3">Cost Reduction</h3>
+                <ul className="space-y-2 text-sm">
+                  {data.improvements.costReduction.map((item, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <div className="w-1.5 h-1.5 bg-efeso-orange rounded-full mt-2 flex-shrink-0"></div>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-presentation-header mb-3">Portfolio Optimization</h3>
+                <ul className="space-y-2 text-sm">
+                  {data.improvements.portfolioOptimization.map((item, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <div className="w-1.5 h-1.5 bg-efeso-orange rounded-full mt-2 flex-shrink-0"></div>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-presentation-header mb-3">Pricing & Revenue</h3>
+                <ul className="space-y-2 text-sm">
+                  {data.improvements.pricingRevenue.map((item, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <div className="w-1.5 h-1.5 bg-efeso-orange rounded-full mt-2 flex-shrink-0"></div>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold text-presentation-header mb-3">Innovation & Brand Investment</h3>
+                <ul className="space-y-2 text-sm">
+                  {data.improvements.innovation.map((item, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <div className="w-1.5 h-1.5 bg-efeso-orange rounded-full mt-2 flex-shrink-0"></div>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-presentation-header mb-3">Integration Discipline</h3>
+                <ul className="space-y-2 text-sm">
+                  {data.improvements.integrationDiscipline.map((item, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <div className="w-1.5 h-1.5 bg-efeso-orange rounded-full mt-2 flex-shrink-0"></div>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </SlideLayout>
+      )
+    },
+    
+    // Slide 11: Pre-Meeting Analysis
+    {
+      id: 11,
+      title: "Pre-meeting Analysis",
+      type: "two-column" as const,
+      content: (
+        <SlideLayout title="Pre-meeting Analysis" slideNumber={11} totalSlides={14}>
+          <div className="grid grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-xl font-semibold text-presentation-header mb-4">Dissatisfaction Elements</h3>
+              <ul className="space-y-3 text-base">
+                {data.analysis.preMeeting.dissatisfaction.map((item, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-efeso-orange rounded-full mt-2 flex-shrink-0"></div>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-semibold text-presentation-header mb-4">EFESO Levers</h3>
+              <ul className="space-y-3 text-base">
+                {data.analysis.preMeeting.levers.map((item, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-efeso-orange rounded-full mt-2 flex-shrink-0"></div>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </SlideLayout>
+      )
+    },
+    
+    // Slide 12: During Meeting Analysis
+    {
+      id: 12,
+      title: "During Meeting Analysis",
+      type: "two-column" as const,
+      content: (
+        <SlideLayout title="During Meeting Analysis" slideNumber={12} totalSlides={14}>
+          <div className="grid grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-xl font-semibold text-presentation-header mb-4">Dissatisfaction Elements</h3>
+              {data.analysis.duringMeeting.dissatisfaction.length > 0 ? (
+                <ul className="space-y-3 text-base">
+                  {data.analysis.duringMeeting.dissatisfaction.map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-efeso-orange rounded-full mt-2 flex-shrink-0"></div>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="text-gray-500 italic">To be completed during the meeting</div>
+              )}
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-semibold text-presentation-header mb-4">EFESO Levers</h3>
+              {data.analysis.duringMeeting.levers.length > 0 ? (
+                <ul className="space-y-3 text-base">
+                  {data.analysis.duringMeeting.levers.map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-efeso-orange rounded-full mt-2 flex-shrink-0"></div>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="text-gray-500 italic">To be completed during the meeting</div>
+              )}
+            </div>
+          </div>
+        </SlideLayout>
+      )
+    },
+    
+    // Slide 13: Follow-up Actions
+    {
+      id: 13,
+      title: "Follow-up Actions",
+      type: "table" as const,
+      content: (
+        <SlideLayout title="Follow-up Actions" slideNumber={13} totalSlides={14}>
+          <div className="space-y-6">
+            <p className="text-lg text-gray-700">
+              Next steps and action items:
+            </p>
+            <PresentationTable
+              headers={["Action", "Who", "When", "Zoho"]}
+              rows={data.followUp.map(item => [item.action, item.who, item.when, item.zoho])}
+            />
+          </div>
+        </SlideLayout>
+      )
+    },
+    
+    // Slide 14: Closing
+    {
+      id: 14,
+      title: "",
+      type: "closing" as const,
+      content: (
+        <SlideLayout isTitle slideNumber={14} totalSlides={14}>
+          <div className="text-center space-y-12">
+            <div className="space-y-6">
+              <h1 className="text-4xl font-bold text-presentation-header">
+                Thank You
+              </h1>
+              <h2 className="text-xl text-gray-600">
+                Questions & Discussion
+              </h2>
+            </div>
+            
+            <div className="flex justify-center items-center gap-3 mt-20">
+              <div className="w-12 h-6 bg-efeso-orange"></div>
+              <div className="text-center">
+                <div className="font-bold text-3xl">EFESO</div>
+                <div className="text-lg text-gray-600">MANAGEMENT CONSULTANTS</div>
+              </div>
+            </div>
+            
+            <div className="text-gray-500 mt-8">
+              Driving operational excellence and sustainable growth
+            </div>
+          </div>
+        </SlideLayout>
+      )
     }
   ];
 
