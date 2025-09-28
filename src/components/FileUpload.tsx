@@ -4,6 +4,8 @@ import { Input } from './ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Upload, FileSpreadsheet, FileText } from 'lucide-react';
 import { useToast } from './ui/use-toast';
+import Papa, { ParseResult } from "papaparse";
+import * as XLSX from "xlsx";
 
 interface FileUploadProps {
   onFileProcessed: (data: any) => void;
@@ -61,43 +63,53 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileProcessed }) => {
     }
   };
 
-  const parseCSV = (file: File): Promise<any[]> => {
+  const parseCSV = (file: File): Promise<Record<string, string>[]> => {
     return new Promise((resolve, reject) => {
-      const Papa = require('papaparse');
-      Papa.parse(file, {
+      Papa.parse<Record<string, string>>(file, {
         header: true,
-        complete: (results: any) => {
-          if (results.errors.length > 0) {
+        skipEmptyLines: true,
+        complete: (results: ParseResult<Record<string, string>>) => {
+          if (results.errors.length) {
             reject(results.errors);
           } else {
             resolve(results.data);
           }
         },
-        error: reject
+        error: (error) => reject(error),
       });
     });
   };
 
-  const parseExcel = (file: File): Promise<any[]> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const XLSX = require('xlsx');
-          const data = e.target?.result;
-          const workbook = XLSX.read(data, { type: 'binary' });
-          const sheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[sheetName];
-          const jsonData = XLSX.utils.sheet_to_json(worksheet);
-          resolve(jsonData);
-        } catch (error) {
-          reject(error);
+  const parseExcel = (file: File): Promise<Record<string, any>[]> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      try {
+        const data = e.target?.result;
+        if (!data) {
+          reject(new Error("File could not be read"));
+          return;
         }
-      };
-      reader.onerror = reject;
-      reader.readAsBinaryString(file);
-    });
-  };
+
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json<Record<string, any>>(worksheet, {
+          defval: "", // fill empty cells with ""
+          raw: false,
+        });
+
+        resolve(jsonData);
+      } catch (error) {
+        reject(error);
+      }
+    };
+
+    reader.onerror = () => reject(new Error("Error reading file"));
+    reader.readAsArrayBuffer(file); // ✅ safer than binary string
+  });
+};
 
   return (
     <Card>

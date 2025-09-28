@@ -16,8 +16,16 @@ import { Link } from "react-router-dom";
 
 export function BIDForm() {
   const { toast } = useToast();
-  const { companyData, setCompanyData } = useCompanyStore();
+  const { companyData, setCompanyData, reset } = useCompanyStore();
   const [data, setData] = useState<CompanyData>(companyData);
+  const [shouldResetData, setShouldResetData] = useState(false);
+
+  useEffect(() => {
+    if (shouldResetData) {
+      setData(companyData);
+      setShouldResetData(false);
+    }
+  }, [companyData, shouldResetData]);
 
   const handleFileProcessed = (rows: any[]) => {
     try {
@@ -903,7 +911,18 @@ export function BIDForm() {
             </TabsContent>
           </Tabs>
 
-          <div className="flex justify-end mt-8">
+          <div className="flex justify-end mt-8 gap-4">
+            <Button
+                className={buttonVariants({ variant: "efeso", size: "lg"  })}
+                onClick={() => {
+                  reset()
+                  toast({ title: "Form reset", description: "All fields have been cleared." })
+                  setShouldResetData(true);
+                }}
+            >
+                Reset
+            </Button>
+
             <Button 
               asChild
               className={buttonVariants({ variant: "efeso", size: "lg" })}
