@@ -1,95 +1,10 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BIDForm } from "@/components/BIDForm";
-import { PresentationViewer } from "@/components/PresentationViewer";
-import { CompanyData } from "@/types/bid";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { FileText, Users, BarChart3, Monitor, ArrowRight } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const Index = () => {
-  const [currentView, setCurrentView] = useState<'landing' | 'form' | 'presentation'>('landing');
-  const [companyData, setCompanyData] = useState<CompanyData | null>(null);
-
-  const handleStartBuilder = () => {
-    setCurrentView('form');
-  };
-
-  const handleDataChange = (data: CompanyData) => {
-    setCompanyData(data);
-  };
-
-  const handlePreview = () => {
-    if (companyData) {
-      setCurrentView('presentation');
-    }
-  };
-
-  const handleBackToForm = () => {
-    setCurrentView('form');
-  };
-
-  const handleBackToLanding = () => {
-    setCurrentView('landing');
-  };
-
-  if (currentView === 'presentation' && companyData) {
-    return (
-      <div className="min-h-screen bg-gray-50 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h1 className="text-3xl font-bold text-presentation-header">
-                {companyData.companyName} - Business Intelligence Deck
-              </h1>
-              <p className="text-gray-600 mt-2">
-                Generated presentation ready for client meeting
-              </p>
-            </div>
-            <div className="flex gap-4">
-              <Button variant="outline" onClick={handleBackToForm}>
-                Edit Data
-              </Button>
-              <Button 
-                className={buttonVariants({ variant: "efeso" })}
-                onClick={handleBackToLanding}
-              >
-                New Presentation
-              </Button>
-            </div>
-          </div>
-          
-          <PresentationViewer data={companyData} />
-        </div>
-      </div>
-    );
-  }
-
-  if (currentView === 'form') {
-    return (
-      <div className="min-h-screen bg-gray-50 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h1 className="text-3xl font-bold text-presentation-header">
-                Business Intelligence Deck Builder
-              </h1>
-              <p className="text-gray-600 mt-2">
-                Enter company information to generate a professional EFESO BID presentation
-              </p>
-            </div>
-            <Button variant="outline" onClick={handleBackToLanding}>
-              Back to Home
-            </Button>
-          </div>
-          
-          <BIDForm onDataChange={handleDataChange} onPreview={handlePreview} />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -114,16 +29,17 @@ const Index = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button 
-              className={buttonVariants({ variant: "efeso", size: "xl" })}
-              onClick={handleStartBuilder}
-            >
-              Start Building Your BID
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+              <Button 
+                className={buttonVariants({ variant: "efeso", size: "xl" })}
+                onClick={() => { window.location.href = "/builder"; }}
+              >
+                Start Building Your BID
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
             <Button 
               variant="outline" 
               size="xl"
+              onClick={() => { window.location.href = "/presentation"; }}
               className="bg-white/10 text-white border-white/30 hover:bg-white hover:text-gray-900 backdrop-blur-sm font-semibold"
             >
               View Sample Presentation
@@ -217,7 +133,7 @@ const Index = () => {
           
           <Button 
             className={buttonVariants({ variant: "efeso", size: "xl" })}
-            onClick={handleStartBuilder}
+            onClick={() => { window.location.href = "/builder"; }}
           >
             Get Started Now
             <ArrowRight className="ml-2 h-5 w-5" />
