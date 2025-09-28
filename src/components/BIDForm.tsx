@@ -12,6 +12,7 @@ import { FileUpload } from "@/components/FileUpload";
 import { parseUploadedData, generateTemplateData } from "@/lib/dataParser";
 import { useToast } from "@/components/ui/use-toast";
 import useCompanyStore from "@/store/use-company-data";
+import { Link } from "react-router-dom";
 
 export function BIDForm() {
   const { toast } = useToast();
@@ -904,10 +905,10 @@ export function BIDForm() {
 
           <div className="flex justify-end mt-8">
             <Button 
-              onClick={() => { window.location.href = '/presentation'}}
+              asChild
               className={buttonVariants({ variant: "efeso", size: "lg" })}
             >
-              Preview Presentation
+              <Link to="/presentation">Preview Presentation</Link>
             </Button>
           </div>
         </CardContent>

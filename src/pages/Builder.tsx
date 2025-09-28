@@ -1,5 +1,6 @@
 import { BIDForm } from "@/components/BIDForm";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 function Builder() {
     return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -13,11 +14,11 @@ function Builder() {
                 Enter company information to generate a professional EFESO BID presentation
               </p>
             </div>
-            <Button 
-                variant="outline" 
-                onClick={() => { window.location.href = "/"; }}
+            <Button
+                variant="outline"
+                asChild
             >
-                Back to Home
+                <Link to="/">Back to Home</Link>
             </Button>
           </div>
           <BIDForm/>

@@ -1,7 +1,7 @@
 import { PresentationViewer } from "@/components/PresentationViewer";
 import { Button, buttonVariants } from "@/components/ui/button";
 import useCompanyStore from "@/store/use-company-data";
-import { Link } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function Presentation() {
     const { companyData } = useCompanyStore();
@@ -19,16 +19,18 @@ function Presentation() {
             </div>
             <div className="flex gap-4">
                 <Button
-                    onClick={() => { window.location.href = "/builder"; }}
                     variant="outline"
-                    >
-                    Edit Data
-                    </Button>
-                <Button 
-                    onClick={() => { window.location.href = "/builder"; }}
+                    asChild
+                >
+                    <Link to="/builder">Edit Data</Link>
+                </Button>
+                <Button
                     className={buttonVariants({ variant: "efeso" })}
-                    >
-                    New Presentation
+                    asChild
+                >
+                    <Link to="/builder">
+                        New Presentation
+                    </Link>
                 </Button>
             </div>
           </div>

@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { buttonVariants } from "@/components/ui/button-variants";
 import { FileText, Users, BarChart3, Monitor, ArrowRight } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
@@ -31,18 +32,19 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button 
                 className={buttonVariants({ variant: "efeso", size: "xl" })}
-                onClick={() => { window.location.href = "/builder"; }}
+                asChild
               >
-                Start Building Your BID
+                <Link to="/builder">Start Building Your BID
                 <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
               </Button>
             <Button 
               variant="outline" 
               size="xl"
-              onClick={() => { window.location.href = "/presentation"; }}
+              asChild
               className="bg-white/10 text-white border-white/30 hover:bg-white hover:text-gray-900 backdrop-blur-sm font-semibold"
             >
-              View Sample Presentation
+              <Link to="/presentation">View Sample Presentation</Link>
             </Button>
           </div>
         </div>
@@ -133,10 +135,11 @@ const Index = () => {
           
           <Button 
             className={buttonVariants({ variant: "efeso", size: "xl" })}
-            onClick={() => { window.location.href = "/builder"; }}
+            asChild
           >
-            Get Started Now
+            <Link to="/builder">Get Started Now
             <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
           </Button>
         </div>
       </section>
