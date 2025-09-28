@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Trash2 } from "lucide-react";
 import { CompanyData } from "@/types/bid";
@@ -13,10 +13,12 @@ import { parseUploadedData, generateTemplateData } from "@/lib/dataParser";
 import { useToast } from "@/components/ui/use-toast";
 import useCompanyStore from "@/store/use-company-data";
 import { Link } from "react-router-dom";
+import useLoadingStore from "@/store/use-loading-data";
 
 export function BIDForm() {
   const { toast } = useToast();
   const { companyData, setCompanyData, reset } = useCompanyStore();
+  const { isLoading, setLoading } = useLoadingStore();
   const [data, setData] = useState<CompanyData>(companyData);
   const [shouldResetData, setShouldResetData] = useState(false);
 
@@ -132,7 +134,33 @@ export function BIDForm() {
             <TabsContent value="upload" className="space-y-6 mt-6">
               <div className="grid gap-6">
                 <FileUpload onFileProcessed={handleFileProcessed} />
-                
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Company Name</CardTitle>
+                    <CardDescription> Get Started by just giving the company name</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Input
+                      value={data.companyName}
+                      onChange={(e) => updateData('companyName', e.target.value)}
+                      placeholder="Enter company name"
+                    />
+                  </CardContent>
+                  <CardFooter className="flex justify-end">
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setLoading(true);
+                        toast({
+                          title: "Generating Data...",
+                          description: "This may take a few moments.",
+                        });
+                      }}
+                    >
+                      Generate Data
+                    </Button>
+                  </CardFooter>
+                </Card>
                 <Card>
                   <CardHeader>
                     <CardTitle>Download Template</CardTitle>

@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Builder from "./pages/Builder";
 import Presentation from "./pages/Presentation";
+import Loader from "./components/Loader";
 
 const queryClient = new QueryClient();
 
@@ -15,6 +16,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <Loader />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
