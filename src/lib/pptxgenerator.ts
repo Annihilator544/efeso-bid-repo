@@ -81,7 +81,7 @@ export function exportToPPTX(data: CompanyData) {
   // Slide 6: Products
   const slide6 = pptx.addSlide();
   slide6.addText("Products/Services", { x: 0.5, y: 0.5, fontSize: 28, bold: true });
-  slide6.addText(data.products.map(p => `• ${p.category}: ${p.items}`).join("\n"), { x: 0.5, y: 1.5, fontSize: 18 });
+  slide6.addText(data.products.map(p => `• ${p.category}: ${p.items}`).join("\n"), { x: 0.5, y: 1.0, fontSize: 14, valign: "top" });
     addSlideFooter(data.companyName, slide6, 6, 15, false);
   // Slide 7: Operations Table
   const slide7 = pptx.addSlide();

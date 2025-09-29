@@ -12,16 +12,17 @@ import { FileUpload } from "@/components/FileUpload";
 import { parseUploadedData, generateTemplateData } from "@/lib/dataParser";
 import { useToast } from "@/components/ui/use-toast";
 import useCompanyStore from "@/store/use-company-data";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useLoadingStore from "@/store/use-loading-data";
 import fetchAllData from "@/lib/request";
 
 export function BIDForm() {
   const { toast } = useToast();
   const { companyData, setCompanyData, reset } = useCompanyStore();
-  const { isLoading, setLoading } = useLoadingStore();
+  const { setLoading } = useLoadingStore();
   const [data, setData] = useState<CompanyData>(companyData);
   const [shouldResetData, setShouldResetData] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (shouldResetData) {
