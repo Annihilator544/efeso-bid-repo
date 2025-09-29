@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 type State = {
     isLoading: boolean;
 };
@@ -7,8 +7,8 @@ type Action = {
 };
 
 const useLoadingStore = create<State & Action>((set) => ({
-  isLoading: false,
-  setLoading: (loading) => set({ isLoading: loading }),
+    isLoading: false,
+    setLoading: (loading) => set({ isLoading: loading }),
 }));
 
 export default useLoadingStore;
