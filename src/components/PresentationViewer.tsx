@@ -21,7 +21,7 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       title: "",
       type: "title" as const,
       content: (
-        <SlideLayout isTitle slideNumber={1} totalSlides={14}>
+        <SlideLayout isTitle slideNumber={1} totalSlides={15}>
           <div className="text-center space-y-8">
             <div className="space-y-4">
               <h1 className="text-5xl font-bold text-presentation-header">
@@ -59,7 +59,7 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       title: `Who are ${data.companyName}?`,
       type: "bullets" as const,
       content: (
-        <SlideLayout title={`Who are ${data.companyName}?`} slideNumber={2} totalSlides={14}>
+        <SlideLayout title={`Who are ${data.companyName}?`} slideNumber={2} totalSlides={15}>
           <ul className="space-y-4 text-lg">
             <li className="flex items-start gap-3">
               <div className="w-2 h-2 bg-efeso-orange rounded-full mt-3 flex-shrink-0"></div>
@@ -96,7 +96,7 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       title: `What is ${data.companyName} ownership?`,
       type: "bullets" as const,
       content: (
-        <SlideLayout title={`What is ${data.companyName} ownership?`} slideNumber={3} totalSlides={14}>
+        <SlideLayout title={`What is ${data.companyName} ownership?`} slideNumber={3} totalSlides={15}>
           <ul className="space-y-6 text-lg">
             <li className="flex items-start gap-3">
               <div className="w-2 h-2 bg-efeso-orange rounded-full mt-3 flex-shrink-0"></div>
@@ -121,7 +121,7 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       title: `What are ${data.companyName} Corporate structure?`,
       type: "bullets" as const,
       content: (
-        <SlideLayout title={`What are ${data.companyName} Corporate structure?`} slideNumber={4} totalSlides={14}>
+        <SlideLayout title={`What are ${data.companyName} Corporate structure?`} slideNumber={4} totalSlides={15}>
           <div className="space-y-8">
             <div>
               <p className="text-lg mb-6">
@@ -136,7 +136,18 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
                 ))}
               </ul>
             </div>
-            
+          </div>
+        </SlideLayout>
+      )
+    },
+
+    {
+      id: 5,
+      title: `What are ${data.companyName} Governance structure?`,
+      type: "bullets" as const,
+      content: (
+        <SlideLayout title={`What are ${data.companyName} Governance structure?`} slideNumber={5} totalSlides={15}>
+          <div className="space-y-8">
             <div>
               <h3 className="text-xl font-semibold text-presentation-header mb-4">Governance Structure</h3>
               <ul className="space-y-3 text-base">
@@ -153,13 +164,13 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       )
     },
     
-    // Slide 5: Products/Services
+    // Slide 6: Products/Services
     {
-      id: 5,
+      id: 6,
       title: `What do ${data.companyName} Make?`,
       type: "bullets" as const,
       content: (
-        <SlideLayout title={`What do ${data.companyName} Make?`} slideNumber={5} totalSlides={14}>
+        <SlideLayout title={`What do ${data.companyName} Make?`} slideNumber={6} totalSlides={15}>
           <div className="space-y-6">
             <p className="text-lg text-gray-700">
               {data.companyName} produces a wide range of branded food and beverage products, including:
@@ -177,13 +188,13 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       )
     },
     
-    // Slide 6: Geographic Operations
+    // Slide 7: Geographic Operations
     {
-      id: 6,
+      id: 7,
       title: `Where do ${data.companyName} operate?`,
       type: "table" as const,
       content: (
-        <SlideLayout title={`Where do ${data.companyName} operate?`} slideNumber={6} totalSlides={14}>
+        <SlideLayout title={`Where do ${data.companyName} operate?`} slideNumber={7} totalSlides={15}>
           <div className="space-y-6">
             <p className="text-lg text-gray-700">
               {data.companyName} has a strong manufacturing and distribution footprint:
@@ -197,13 +208,13 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       )
     },
     
-    // Slide 7: Financial Performance
+    // Slide 8: Financial Performance
     {
-      id: 7,
+      id: 8,
       title: `What is ${data.companyName} financial performance?`,
       type: "table" as const,
       content: (
-        <SlideLayout title={`What is ${data.companyName} financial performance?`} slideNumber={7} totalSlides={14}>
+        <SlideLayout title={`What is ${data.companyName} financial performance?`} slideNumber={8} totalSlides={15}>
           <div className="space-y-6">
             <p className="text-lg text-gray-700">
               Financial performance over recent years:
@@ -219,13 +230,13 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       )
     },
     
-    // Slide 8: Competitors
+    // Slide 9: Competitors
     {
-      id: 8,
+      id: 9,
       title: `Who are ${data.companyName} competitors?`,
       type: "table" as const,
       content: (
-        <SlideLayout title={`Who are ${data.companyName} competitors?`} slideNumber={8} totalSlides={14}>
+        <SlideLayout title={`Who are ${data.companyName} competitors?`} slideNumber={9} totalSlides={15}>
           <div className="space-y-6">
             <p className="text-lg text-gray-700">
               Key competitors in the market:
@@ -239,13 +250,13 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       )
     },
     
-    // Slide 9: Profitability Analysis
+    // Slide 10: Profitability Analysis
     {
-      id: 9,
+      id: 10,
       title: `How profitable is ${data.companyName}?`,
       type: "table" as const,
       content: (
-        <SlideLayout title={`How profitable is ${data.companyName}?`} slideNumber={9} totalSlides={14}>
+        <SlideLayout title={`How profitable is ${data.companyName}?`} slideNumber={10} totalSlides={15}>
           <div className="space-y-6">
             <p className="text-lg text-gray-700">
               Current profitability metrics:
@@ -265,13 +276,13 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       )
     },
     
-    // Slide 10: Improvement Opportunities
+    // Slide 11: Improvement Opportunities
     {
-      id: 10,
+      id: 11,
       title: `What are the improvement opportunities?`,
       type: "two-column" as const,
       content: (
-        <SlideLayout title={`What are the improvement opportunities?`} slideNumber={10} totalSlides={14}>
+        <SlideLayout title={`What are the improvement opportunities?`} slideNumber={11} totalSlides={15}>
           <div className="grid grid-cols-2 gap-8">
             <div className="space-y-6">
               <div>
@@ -341,13 +352,13 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       )
     },
     
-    // Slide 11: Pre-Meeting Analysis
+    // Slide 12: Pre-Meeting Analysis
     {
-      id: 11,
+      id: 12,
       title: "Pre-meeting Analysis",
       type: "two-column" as const,
       content: (
-        <SlideLayout title="Pre-meeting Analysis" slideNumber={11} totalSlides={14}>
+        <SlideLayout title="Pre-meeting Analysis" slideNumber={12} totalSlides={15}>
           <div className="grid grid-cols-2 gap-8">
             <div>
               <h3 className="text-xl font-semibold text-presentation-header mb-4">Dissatisfaction Elements</h3>
@@ -377,13 +388,13 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       )
     },
     
-    // Slide 12: During Meeting Analysis
+    // Slide 13: During Meeting Analysis
     {
-      id: 12,
+      id: 13,
       title: "During Meeting Analysis",
       type: "two-column" as const,
       content: (
-        <SlideLayout title="During Meeting Analysis" slideNumber={12} totalSlides={14}>
+        <SlideLayout title="During Meeting Analysis" slideNumber={13} totalSlides={15}>
           <div className="grid grid-cols-2 gap-8">
             <div>
               <h3 className="text-xl font-semibold text-presentation-header mb-4">Dissatisfaction Elements</h3>
@@ -421,13 +432,13 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       )
     },
     
-    // Slide 13: Follow-up Actions
+    // Slide 14: Follow-up Actions
     {
-      id: 13,
+      id: 14,
       title: "Follow-up Actions",
       type: "table" as const,
       content: (
-        <SlideLayout title="Follow-up Actions" slideNumber={13} totalSlides={14}>
+        <SlideLayout title="Follow-up Actions" slideNumber={14} totalSlides={15}>
           <div className="space-y-6">
             <p className="text-lg text-gray-700">
               Next steps and action items:
@@ -441,13 +452,13 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
       )
     },
     
-    // Slide 14: Closing
+    // Slide 15: Closing
     {
-      id: 14,
+      id: 15,
       title: "",
       type: "closing" as const,
       content: (
-        <SlideLayout isTitle slideNumber={14} totalSlides={14}>
+        <SlideLayout isTitle slideNumber={15} totalSlides={15}>
           <div className="text-center space-y-12">
             <div className="space-y-6">
               <h1 className="text-4xl font-bold text-presentation-header">

@@ -29,7 +29,7 @@ export function PresentationTable({ headers, rows, className = "" }: TableProps)
               {row.map((cell, cellIndex) => (
                 <td
                   key={cellIndex}
-                  className="px-6 py-4 text-sm text-gray-700 border-t border-gray-100"
+                  className="px-6 py-4 text-sm text-gray-700 border-t border-gray-100 "
                 >
                   {cell}
                 </td>

@@ -18,7 +18,7 @@ export function SlideLayout({
   className = "" 
 }: SlideLayoutProps) {
   return (
-    <div className={`relative w-full h-[600px] bg-white border border-gray-200 shadow-lg ${className}`}>
+    <div className={`relative w-full h-fit min-h-[600px] bg-white border border-gray-200 shadow-lg ${className}`}>
       {/* Header with title */}
       {title && !isTitle && (
         <div className="p-8 pb-6">

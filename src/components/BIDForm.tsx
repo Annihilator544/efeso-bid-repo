@@ -14,6 +14,7 @@ import { useToast } from "@/components/ui/use-toast";
 import useCompanyStore from "@/store/use-company-data";
 import { Link } from "react-router-dom";
 import useLoadingStore from "@/store/use-loading-data";
+import fetchAllData from "@/lib/request";
 
 export function BIDForm() {
   const { toast } = useToast();
@@ -149,12 +150,15 @@ export function BIDForm() {
                   <CardFooter className="flex justify-end">
                     <Button
                       variant="outline"
-                      onClick={() => {
+                      onClick={async () => {
                         setLoading(true);
                         toast({
                           title: "Generating Data...",
                           description: "This may take a few moments.",
                         });
+                        const result = await fetchAllData(data.companyName);
+                        setData(prev => ({ ...prev, ...result }));
+                        setLoading(false);
                       }}
                     >
                       Generate Data
