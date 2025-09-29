@@ -5,6 +5,7 @@ import { buttonVariants } from "@/components/ui/button-variants";
 import { SlideLayout } from "@/components/SlideLayout";
 import { PresentationTable } from "@/components/PresentationTable";
 import { CompanyData } from "@/types/bid";
+import { exportToPPTX } from "@/lib/pptxgenerator";
 
 interface PresentationViewerProps {
   data: CompanyData;
@@ -554,6 +555,7 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
           
           <Button 
             className={buttonVariants({ variant: "efeso", size: "sm" })}
+            onClick={() => {exportToPPTX(data)}}
           >
             <FileDown className="h-4 w-4" />
             Export PDF
