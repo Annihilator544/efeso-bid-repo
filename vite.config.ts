@@ -7,17 +7,17 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => {
   return {
     define: {
-      __APP_ENV__: process.env.VITE_PERPLEXITY_API_KEY,
-    },
-    server: {
-      host: "::",
-      port: 8080,
-    },
-    plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
-    resolve: {
-      alias: {
-        "@": path.resolve(__dirname, "./src"),
+        __APP_ENV__: JSON.stringify(process.env.VITE_PERPLEXITY_API_KEY),
       },
-    },
-  }
-});
+      server: {
+        host: "::",
+        port: 8080,
+      },
+      plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+      resolve: {
+        alias: {
+          "@": path.resolve(__dirname, "./src"),
+        },
+      },
+    }
+  });

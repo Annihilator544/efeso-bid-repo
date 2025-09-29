@@ -5,7 +5,6 @@ async function request(content: string, key: keyof CompanyData) {
     if (key === "analysis" || key === "followUp") {
         return {}; 
     }
-    console.log("Requesting", import.meta.env);
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${import.meta.env.VITE_PERPLEXITY_API_KEY}`);
     myHeaders.append("Content-Type", "application/json");
@@ -90,7 +89,6 @@ async function fetchAllData(companyName: string) {
             }
         })
     );
-    console.log("Final result:", result);
     return result;
 }
 
