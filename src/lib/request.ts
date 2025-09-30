@@ -1,5 +1,6 @@
 import { CompanyData } from '@/types/bid';
 import { CompanyDataSchema } from '@/types/CompanyDataScheme';
+import { toast } from 'sonner';
 
 async function request(content: string, key: keyof CompanyData) {
     if (key === 'analysis' || key === 'followUp') {
@@ -26,6 +27,7 @@ async function request(content: string, key: keyof CompanyData) {
                 schema: properties,
             },
         },
+        temperature: 0.2,
     };
     const requestOptions = {
         method: 'POST',
@@ -87,11 +89,17 @@ Present as a numbered list.`,
 - If no data is available, respond with "Not available". 
 Do not explain or define their functions.`,
 
-        products: `Organize ${companyName}'s product and service portfolio into 3–5 main categories. For each category, list 2–3 flagship products, brands, or product lines. 
+        products: `Provide an overview of ${companyName}'s product and service portfolio. 
+- Complete product and service catalog organized by category
+   - Product lines, brands, and offerings
+   - Market positioning for each product category
 Use the format: 
-Category: Product1, Product2, Product3.`,
+Category – General category description: Product1, Product2, Product3.`,
 
-        operations: `List countries where ${companyName} has significant operations. For each country specify facility types (manufacturing plants, distribution centers, offices, R&D centers, etc.). 
+        operations: `List countries where ${companyName} has significant operations. For each country specify :
+        - Global footprint and market presence
+   - Facility locations by type (manufacturing, distribution, offices, R&D)
+   - Regional revenue distribution. 
 Provide one line per country in the format: 
 Country – Facility Types.`,
 

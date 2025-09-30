@@ -187,11 +187,6 @@ export function BIDForm() {
                                             variant='outline'
                                             onClick={async () => {
                                                 setLoading(true);
-                                                toast({
-                                                    title: 'Generating Data...',
-                                                    description:
-                                                        'This may take a few moments.',
-                                                });
                                                 const result =
                                                     await fetchAllData(
                                                         data.companyName
