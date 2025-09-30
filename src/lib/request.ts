@@ -59,26 +59,68 @@ function cleanFinancials(raw: any[]): CompanyData['financials'] {
 async function fetchAllData(companyName: string) {
     const result: Partial<CompanyData> = {};
     const prompts = {
-        overview: `Provide a concise company profile for ${companyName}: 1-2 sentence business description, founding year, current ownership structure, approximate employee count, geographic presence/markets served, and primary business model. Format as brief factual statements.`,
+        overview: `Provide a structured company overview for ${companyName}. Include: 
+- 1–2 sentence description of core business and industry focus 
+- Founding year 
+- Current ownership structure 
+- Approximate employee count 
+- Geographic reach/markets served 
+- Primary business model 
+Respond in concise factual statements only.`,
 
-        ownership: `Detail ${companyName}'s ownership: current parent company/owner, acquisition date and purchase price (if applicable), previous owner, and whether original management remained post-acquisition. Keep each point to one sentence.`,
+        ownership: `Summarize ${companyName}'s ownership history and current status. Include: 
+- Current parent company/owner 
+- Acquisition date and purchase price (if applicable) 
+- Previous owners 
+- Whether original management continued post-acquisition 
+Format as clear bullet points.`,
 
-        leadership: `List the top 5 executives at ${companyName} with: full name, current title, and 1-sentence background highlighting previous role or key qualification. Present as a structured list.`,
+        leadership: `List the top 5 executives at ${companyName}. For each executive provide: 
+- Full name 
+- Current title 
+- One-sentence background (previous role, major qualification, or relevant experience). 
+Present as a numbered list.`,
 
-        governance: `List the top 5 most important governing bodies at ${companyName} (e.g., Board of Directors, Executive Committee, Supervisory Board, Audit Committee). Provide only the names/types of these bodies, one per line. If fewer than 5 exist, list only what exists. If no governance information is publicly available, respond with "Not available". Do not provide definitions or explanations.`,
+        governance: `Identify up to 5 key governance bodies at ${companyName} (e.g., Board of Directors, Supervisory Board, Executive Committee, Audit Committee). 
+- List only the official names/types of these bodies, one per line. 
+- If fewer than 5 exist, list what is available. 
+- If no data is available, respond with "Not available". 
+Do not explain or define their functions.`,
 
-        products: `Categorize ${companyName}'s product portfolio into 3-5 main categories, listing 2-3 flagship products or product lines per category. Use format: Category: Product1, Product2, Product3.`,
+        products: `Organize ${companyName}'s product and service portfolio into 3–5 main categories. For each category, list 2–3 flagship products, brands, or product lines. 
+Use the format: 
+Category: Product1, Product2, Product3.`,
 
-        operations: `List countries where ${companyName} has significant operations, specifying facility types (manufacturing plants, distribution centers, offices, R&D facilities) in each location. One line per country.`,
+        operations: `List countries where ${companyName} has significant operations. For each country specify facility types (manufacturing plants, distribution centers, offices, R&D centers, etc.). 
+Provide one line per country in the format: 
+Country – Facility Types.`,
 
-        financials: `Provide ${companyName}'s financial metrics for the most recent 5 fiscal years in tabular format: Year, Revenue (with currency), Operating Profit, Net Profit, Operating Margin (%), Free Cash Flow, Total Debt. Use actual figures only. For each unavailable metric, write "N/A" in that cell. If no financial data exists at all, respond with only "Not available". Do not include any explanatory text, jurisdictional clarifications, or data source notes.`,
+        financials: `Provide ${companyName}'s financial metrics for the most recent 5 fiscal years in a table with columns: Year, Revenue (with currency), Operating Profit, Net Profit, Operating Margin (%), Free Cash Flow, Total Debt. 
+- Use actual figures only 
+- If a metric is unavailable, write "N/A" 
+- If no financial data exists at all, respond only with "Not available" 
+Do not include explanations or commentary.`,
 
-        competitors: `Identify ${companyName}'s top 5-7 direct competitors, noting each competitor's primary competitive focus or differentiation in one brief phrase (e.g., "premium segment," "cost leadership," "innovation focus").`,
+        competitors: `List the top 5–7 direct competitors of ${companyName}. For each competitor, include its primary differentiation or competitive focus in 3–6 words (e.g., "premium segment," "cost leadership," "innovation focus"). 
+Present as a structured list.`,
 
-        profitability: `State ${companyName}'s most recent annual profitability metrics: total revenue, operating profit, net profit (all with currency), operating margin percentage, and net margin percentage. Use latest fiscal year data.`,
+        profitability: `Provide ${companyName}'s most recent annual profitability metrics (latest fiscal year). Include: 
+- Total revenue (with currency) 
+- Operating profit 
+- Net profit 
+- Operating margin (%) 
+- Net margin (%) 
+Respond with figures only, no commentary.`,
 
-        improvements: `Identify specific operational improvement initiatives at ${companyName} across: (1) Cost reduction programs, (2) Portfolio optimization/divestments, (3) Pricing and revenue strategies, (4) Innovation/R&D investments, (5) Post-acquisition integration efforts. List 2-3 concrete initiatives per category.`,
+        improvements: `List ${companyName}'s recent operational improvement initiatives across 5 categories. For each category, provide 2–3 concrete initiatives: 
+1. Cost reduction programs 
+2. Portfolio optimization/divestments 
+3. Pricing & revenue strategies 
+4. Innovation & R&D investments 
+5. Post-acquisition integration efforts 
+Format as a structured list under each category.`,
     };
+
     await Promise.all(
         Object.entries(prompts).map(async ([key, prompt]) => {
             try {
