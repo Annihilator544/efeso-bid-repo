@@ -46,6 +46,7 @@ export interface CompanyData {
         operatingMargin: string;
         freeCashFlow: string;
         debt: string;
+        citations: string;
     }>;
 
     competitors: Array<{

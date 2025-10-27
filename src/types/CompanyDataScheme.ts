@@ -102,6 +102,7 @@ export const CompanyDataSchema: Record<keyof CompanyData, FieldDefinition> = {
                 operatingMargin: { type: 'string' },
                 freeCashFlow: { type: 'string' },
                 debt: { type: 'string' },
+                citations: { type: 'string' },
             },
             required: [
                 'year',
@@ -111,6 +112,7 @@ export const CompanyDataSchema: Record<keyof CompanyData, FieldDefinition> = {
                 'operatingMargin',
                 'freeCashFlow',
                 'debt',
+                'citations',
             ],
         },
     },

@@ -173,8 +173,7 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
                             <p className='text-lg mb-6'>
                                 {data.companyName} is led by a{' '}
                                 <strong>Group Executive Team</strong> composed
-                                of seasoned professionals from the food and
-                                beverage industry:
+                                of seasoned professionals:
                             </p>
                             <ul className='space-y-4 text-base'>
                                 {data.leadership.map((leader, index) => (
@@ -241,8 +240,8 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
                 >
                     <div className='space-y-6'>
                         <p className='text-lg text-gray-700'>
-                            {data.companyName} produces a wide range of branded
-                            food and beverage products, including:
+                            {data.companyName} produces a wide range of products
+                            and services, including:
                         </p>
                         <ul className='space-y-4 text-base'>
                             {data.products.map((product, index) => (
@@ -326,6 +325,56 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
                                 fin.debt,
                             ])}
                         />
+                        {(() => {
+                            const citationSet = new Set<string>();
+                            data.financials.forEach((fin) => {
+                                if (
+                                    fin.citations &&
+                                    fin.citations !== 'N/A' &&
+                                    fin.citations.trim() !== ''
+                                ) {
+                                    fin.citations
+                                        .split(',')
+                                        .forEach((citation) => {
+                                            const trimmed = citation.trim();
+                                            if (trimmed) {
+                                                citationSet.add(trimmed);
+                                            }
+                                        });
+                                }
+                            });
+
+                            if (citationSet.size > 0) {
+                                return (
+                                    <div className='mt-8 pt-4 border-t border-gray-200'>
+                                        <p className='text-xs text-gray-500 font-semibold mb-2'>
+                                            Sources:
+                                        </p>
+                                        <div className='space-y-1'>
+                                            {Array.from(citationSet).map(
+                                                (citation, idx) => (
+                                                    <p
+                                                        key={idx}
+                                                        className='text-xs text-gray-600'
+                                                    >
+                                                        [{idx + 1}]{' '}
+                                                        <a
+                                                            href={citation}
+                                                            target='_blank'
+                                                            rel='noopener noreferrer'
+                                                            className='text-blue-600 hover:underline break-all'
+                                                        >
+                                                            {citation}
+                                                        </a>
+                                                    </p>
+                                                )
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            }
+                            return null;
+                        })()}
                     </div>
                 </SlideLayout>
             ),
@@ -710,6 +759,7 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
     const togglePlay = () => {
         setIsPlaying(!isPlaying);
     };
+    console.log(data);
 
     return (
         <div className='w-full max-w-6xl mx-auto space-y-6'>

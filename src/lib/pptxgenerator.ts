@@ -285,6 +285,33 @@ export function exportToPPTX(data: CompanyData) {
         fontSize: 12,
         autoPage: true,
     });
+    const citationSet = new Set<string>();
+    data.financials.forEach((f) => {
+        if (f.citations && f.citations !== 'N/A' && f.citations.trim() !== '') {
+            // Split comma-separated citations and add each unique one
+            f.citations.split(',').forEach((citation) => {
+                const trimmed = citation.trim();
+                if (trimmed) {
+                    citationSet.add(trimmed);
+                }
+            });
+        }
+    });
+
+    if (citationSet.size > 0) {
+        const citationsText = Array.from(citationSet)
+            .map((citation, idx) => `[${idx + 1}] ${citation}`)
+            .join('\n');
+
+        slide8.addText(citationsText, {
+            x: 0.5,
+            y: 6.5,
+            w: 9,
+            fontSize: 8,
+            color: '666666',
+            valign: 'top',
+        });
+    }
     addSlideFooter(data.companyName, slide8, 8, 15, false);
     // Slide 9: Competitors Table
     const slide9 = pptx.addSlide();

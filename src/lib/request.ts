@@ -55,6 +55,7 @@ function cleanFinancials(raw: any[]): CompanyData['financials'] {
         operatingMargin: row.operatingMargin.replace(/^.*?:\s*/, ''),
         freeCashFlow: row.freeCashFlow.replace(/^.*?:\s*/, ''),
         debt: row.debt.replace(/^.*?:\s*/, ''),
+        citations: row.citations,
     }));
 }
 
@@ -77,40 +78,110 @@ Respond in concise factual statements only.`,
 - Whether original management continued post-acquisition 
 Format as clear bullet points.`,
 
-        leadership: `List the top 5 executives at ${companyName}. For each executive provide: 
-- Full name 
-- Current title 
-- One-sentence background (previous role, major qualification, or relevant experience). 
-Present as a numbered list.`,
+        // ...existing code...
+        leadership: `Provide the top 5 executives at ${companyName} as a JSON array. Each object must have:
+- name: Full name of the executive
+- title: Current job title
+- background: One-sentence summary of their background (previous role, major qualification, or relevant experience)
 
-        governance: `Identify up to 5 key governance bodies at ${companyName} (e.g., Board of Directors, Supervisory Board, Executive Committee, Audit Committee). 
-- List only the official names/types of these bodies, one per line. 
-- If fewer than 5 exist, list what is available. 
-- If no data is available, respond with "Not available". 
-Do not explain or define their functions.`,
+Example format:
+[
+  {"name": "John Smith", "title": "Chief Executive Officer", "background": "Former VP at Company X with 20 years in manufacturing"},
+  {"name": "Jane Doe", "title": "Chief Financial Officer", "background": "Previously CFO at Fortune 500 company"}
+]
 
-        products: `Provide an overview of ${companyName}'s product and service portfolio. 
-- Complete product and service catalog organized by category
-   - Product lines, brands, and offerings
-   - Market positioning for each product category
-Use the format: 
-Category – General category description: Product1, Product2, Product3.`,
+Return exactly 5 executives if available, fewer if the company has less.`,
 
-        operations: `List countries where ${companyName} has significant operations. For each country specify :
-        - Global footprint and market presence
-   - Facility locations by type (manufacturing, distribution, offices, R&D)
-   - Regional revenue distribution. 
-Provide one line per country in the format: 
-Country – Facility Types.`,
+        governance: `Provide ${companyName}'s governance structure as a JSON object with a "bodies" array. Each item should be a detailed description of a governance body.
 
-        financials: `Provide ${companyName}'s financial metrics for the most recent 5 fiscal years in a table with columns: Year, Revenue (with currency), Operating Profit, Net Profit, Operating Margin (%), Free Cash Flow, Total Debt. 
-- Use actual figures only 
-- If a metric is unavailable, write "N/A" 
-- If no financial data exists at all, respond only with "Not available" 
-Do not include explanations or commentary.`,
+Include:
+- Board of Directors (with key member names if publicly available)
+- Supervisory Board (if applicable)
+- Executive Committee
+- Audit Committee
+- Any other significant governance bodies
 
-        competitors: `List the top 5–7 direct competitors of ${companyName}. For each competitor, include its primary differentiation or competitive focus in 3–6 words (e.g., "premium segment," "cost leadership," "innovation focus"). 
-Present as a structured list.`,
+Format each entry as: "Body Name: Key members/description"
+
+Example format:
+{
+  "bodies": [
+    "Board of Directors: John Smith (Chairman), Jane Doe, Michael Johnson",
+    "Audit Committee: Sarah Williams (Chair), Robert Brown",
+    "Executive Committee: 5 senior executives overseeing operations"
+  ]
+}
+
+If specific member names are not publicly available, describe the body's composition (e.g., "Board of Directors: 7 independent members, 2 executive members"). Include up to 5-7 governance bodies.`,
+        // ...existing code...
+
+        products: `Provide ${companyName}'s product and service portfolio as a JSON array. Each object should have:
+- category: The product category name (e.g., "Industrial Equipment", "Software Solutions")
+- items: A comma-separated string of products/services in that category
+
+Example format:
+[
+  {"category": "Industrial Equipment", "items": "Product A, Product B, Product C"},
+  {"category": "Software Solutions", "items": "Product X, Product Y"}
+]
+
+Include all major product lines, brands, and service offerings organized by logical categories.`,
+
+        // ...existing code...
+        operations: `Provide ${companyName}'s operational presence as a JSON array. Each object should have:
+- country: The country name
+- facilities: Description of facility types and operations (manufacturing, distribution, offices, R&D, etc.)
+
+Example format:
+[
+  {"country": "Germany", "facilities": "Manufacturing plants, R&D centers, corporate headquarters"},
+  {"country": "United States", "facilities": "Distribution centers, sales offices"},
+  {"country": "China", "facilities": "Manufacturing facilities, regional office"}
+]
+
+Include all countries where the company has significant operations. List 5-10 major locations.`,
+        // ...existing code...
+
+        // ...existing code...
+        financials: `Provide ${companyName}'s financial metrics for the most recent 5 fiscal years as a JSON array. Each object should have:
+- year: The fiscal year
+- revenue: Total revenue with currency
+- operatingProfit: Operating profit figure
+- netProfit: Net profit figure
+- operatingMargin: Operating margin as percentage
+- freeCashFlow: Free cash flow figure
+- debt: Total debt figure
+- citations: Full URLs of sources used (comma-separated if multiple)
+
+Example format:
+[
+  {
+    "year": "2023",
+    "revenue": "€5.97 billion",
+    "operatingProfit": "€1.62 billion",
+    "netProfit": "€1.24 billion",
+    "operatingMargin": "27.1%",
+    "freeCashFlow": "€1.02 billion",
+    "debt": "€500 million",
+    "citations": "https://company.com/investor-relations/annual-report-2023"
+  }
+]
+
+Use actual figures only. If a metric is unavailable, write "N/A". Include full source URLs in citations field.`,
+
+        competitors: `List the top 5-7 direct competitors of ${companyName} as a JSON array. Each object should have:
+- name: Full company name
+- focusAreas: Primary differentiation or competitive focus (3-6 words)
+
+Example format:
+[
+  {"name": "Competitor A", "focusAreas": "Premium segment, innovation focus"},
+  {"name": "Competitor B", "focusAreas": "Cost leadership, mass market"},
+  {"name": "Competitor C", "focusAreas": "Specialty products, niche markets"}
+]
+
+Include 5-7 competitors with their key competitive positioning.`,
+        // ...existing code...
 
         profitability: `Provide ${companyName}'s most recent annual profitability metrics (latest fiscal year). Include: 
 - Total revenue (with currency) 
