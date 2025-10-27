@@ -135,7 +135,7 @@ export function BIDForm() {
                 </CardHeader>
                 <CardContent>
                     <Tabs defaultValue='upload' className='w-full'>
-                        <TabsList className='grid w-full grid-cols-8 text-xs'>
+                        {/* <TabsList className='grid w-full grid-cols-8 text-xs'>
                             <TabsTrigger value='upload'>Upload</TabsTrigger>
                             <TabsTrigger value='basic'>Basic</TabsTrigger>
                             <TabsTrigger value='structure'>
@@ -154,13 +154,13 @@ export function BIDForm() {
                                 Improvements
                             </TabsTrigger>
                             <TabsTrigger value='analysis'>Analysis</TabsTrigger>
-                        </TabsList>
+                        </TabsList> */}
 
                         <TabsContent value='upload' className='space-y-6 mt-6'>
                             <div className='grid gap-6'>
-                                <FileUpload
+                                {/* <FileUpload
                                     onFileProcessed={handleFileProcessed}
-                                />
+                                /> */}
                                 <Card>
                                     <CardHeader>
                                         <CardTitle>Company Name</CardTitle>
@@ -202,7 +202,7 @@ export function BIDForm() {
                                         </Button>
                                     </CardFooter>
                                 </Card>
-                                <Card>
+                                {/* <Card>
                                     <CardHeader>
                                         <CardTitle>Download Template</CardTitle>
                                     </CardHeader>
@@ -220,7 +220,7 @@ export function BIDForm() {
                                             offline
                                         </p>
                                     </CardContent>
-                                </Card>
+                                </Card> */}
                             </div>
                         </TabsContent>
 

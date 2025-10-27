@@ -759,7 +759,6 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
     const togglePlay = () => {
         setIsPlaying(!isPlaying);
     };
-    console.log(data);
 
     return (
         <div className='w-full max-w-6xl mx-auto space-y-6'>
@@ -801,7 +800,7 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
                         Slide {currentSlide + 1} of {slides.length}
                     </span>
 
-                    <Button
+                    {/* <Button
                         className={buttonVariants({
                             variant: 'efeso',
                             size: 'sm',
@@ -812,7 +811,7 @@ export function PresentationViewer({ data }: PresentationViewerProps) {
                     >
                         <FileDown className='h-4 w-4' />
                         Export PDF
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
         </div>
