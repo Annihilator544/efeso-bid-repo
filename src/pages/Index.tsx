@@ -50,7 +50,7 @@ const Index = () => {
                                 <ArrowRight className='ml-2 h-5 w-5' />
                             </Link>
                         </Button>
-                        <Button
+                        {/* <Button
                             variant='outline'
                             size='xl'
                             asChild
@@ -59,7 +59,7 @@ const Index = () => {
                             <Link to='/presentation'>
                                 View Sample Presentation
                             </Link>
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
             </section>
